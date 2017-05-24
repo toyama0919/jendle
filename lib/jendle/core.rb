@@ -21,5 +21,9 @@ module Jendle
       params[:password] = password if password
       @client = JenkinsApi::Client.new(params)
     end
+
+    def restart
+      @client.system.restart(true)
+    end
   end
 end

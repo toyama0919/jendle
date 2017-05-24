@@ -12,10 +12,10 @@ module Jendle
       super(args, options, config)
       @global_options = config[:shell].base.options
       config = get_config(@global_options[:profile])
-      core = Core.new(config)
-      @job = Job.new(core)
-      @view = View.new(core)
-      @plugin = Plugin.new(core)
+      @core = Core.new(config)
+      @job = Job.new(@core)
+      @view = View.new(@core)
+      @plugin = Plugin.new(@core)
     end
 
     desc 'export', 'export'
@@ -100,6 +100,11 @@ module Jendle
     option :'dry-run', aliases: '-d', type: :boolean, default: false, desc: 'dry-run'
     def restore_views
       @view.restore(options, get_config(options[:source_profile]))
+    end
+
+    desc 'restart', 'restart'
+    def restart
+      @core.restart
     end
 
     desc 'version', 'show version'
