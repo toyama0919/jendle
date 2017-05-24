@@ -1,11 +1,5 @@
 module Jendle
-  class View
-
-    def initialize(core)
-      @core = core
-      @client = core.client
-      @logger = core.logger
-    end
+  class View < Base
 
     def restore(options, source_config)
       source_client = @core.get_client(
@@ -13,7 +7,7 @@ module Jendle
         source_config['username'],
         source_config['password']
       )
-      get_config_pairs(source_client).each do |job_name, xml|
+      get_config_pairs(source_client).each do |view_name, xml|
         apply_proc(job_name, xml, options[:'dry-run'])
       end
     end

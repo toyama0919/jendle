@@ -1,11 +1,5 @@
 module Jendle
-  class Plugin
-
-    def initialize(core)
-      @core = core
-      @client = core.client
-      @logger = core.logger
-    end
+  class Plugin < Base
 
     def restore(options, source_config)
       source_client = @core.get_client(

@@ -1,11 +1,5 @@
 module Jendle
-  class Job
-
-    def initialize(core)
-      @core = core
-      @client = core.client
-      @logger = core.logger
-    end
+  class Job < Base
 
     def restore(options, source_config)
       source_client = @core.get_client(
