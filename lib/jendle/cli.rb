@@ -108,7 +108,7 @@ module Jendle
       @core.restart
     end
 
-    desc 'restart', 'restart'
+    desc 'delete_jobs', 'delete_jobs'
     def delete_jobs
       @job.delete_jobs(options)
     end
