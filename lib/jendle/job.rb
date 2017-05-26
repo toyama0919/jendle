@@ -1,14 +1,22 @@
 module Jendle
   class Job < Base
 
-    def restore(options, source_config)
+    def delete_jobs(options)
+      get_config_pairs.keys.each do |job_name|
+        @client.job.delete(job_name)
+      end
+    end
+
+    def restore(options, source_config, apply_job_name = nil)
       source_client = @core.get_client(
         source_config['server_ip'],
         source_config['username'],
         source_config['password']
       )
       get_config_pairs(source_client).each do |job_name, xml|
-        apply_proc(job_name, xml, options[:'dry-run'])
+        if (job_name == apply_job_name) || apply_job_name.nil?
+          apply_proc(job_name, xml, options[:'dry-run'])
+        end
       end
     end
 

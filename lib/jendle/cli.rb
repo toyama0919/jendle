@@ -78,8 +78,9 @@ module Jendle
     desc 'restore_jobs', 'restore_jobs'
     option :source_profile, type: :string, required: true, desc: 'file'
     option :'dry-run', aliases: '-d', type: :boolean, default: false, desc: 'dry-run'
+    option :job_name, aliases: '-j', type: :string, desc: 'job_name'
     def restore_jobs
-      @job.restore(options, get_config(options[:source_profile]))
+      @job.restore(options, get_config(options[:source_profile]), options[:job_name])
     end
 
     desc 'export_views', 'export_views'
@@ -105,6 +106,11 @@ module Jendle
     desc 'restart', 'restart'
     def restart
       @core.restart
+    end
+
+    desc 'restart', 'restart'
+    def delete_jobs
+      @job.delete_jobs(options)
     end
 
     desc 'version', 'show version'
