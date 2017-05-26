@@ -27,15 +27,17 @@ module Jendle
     def apply(options)
       File.read(options[:file]).lines.each do |plugin|
         plugin = plugin.strip
-        apply_proc(plugin)
+        apply_proc(plugin, options[:'dry-run'])
       end
       @core.restart
     end
 
-    def apply_proc(plugin)
+    def apply_proc(plugin, dryrun)
       if !(@client.plugin.list_installed.key?(plugin))
-        @client.plugin.install(plugin)
-        sleep 3
+        unless dryrun
+          @client.plugin.install(plugin)
+          sleep 3
+        end
       else
         @logger.info("already installed #{plugin}")
       end
