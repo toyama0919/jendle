@@ -11,7 +11,7 @@ module Jendle
       plugins.each do |k, v|
         apply_proc(k)
       end
-      restart
+      @core.restart
     end
 
     def export(options)
@@ -29,7 +29,7 @@ module Jendle
         plugin = plugin.strip
         apply_proc(plugin)
       end
-      restart
+      @core.restart
     end
 
     def apply_proc(plugin)
@@ -38,13 +38,6 @@ module Jendle
         sleep 3
       else
         @logger.info("already installed #{plugin}")
-      end
-    end
-
-    def restart
-      if @client.plugin.restart_required?
-        @logger.info("restarting...")
-        @client.system.restart(true)
       end
     end
   end

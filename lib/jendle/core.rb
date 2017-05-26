@@ -23,7 +23,9 @@ module Jendle
     end
 
     def restart
-      @client.system.restart(true)
+      if @client.plugin.restart_required?
+        @client.system.restart
+      end
     end
   end
 end
